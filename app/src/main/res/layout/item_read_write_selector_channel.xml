@@ -1,0 +1,11 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvReadWriteSelectorChannel"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:layout_margin="6dp"
+    android:background="@drawable/bg_channel_tile"
+    android:gravity="center"
+    android:text="@string/placeholder_channel_1"
+    android:textColor="#111827"
+    android:textSize="20sp"
+    android:textStyle="bold" />

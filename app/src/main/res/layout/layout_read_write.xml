@@ -1,0 +1,218 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/readWritePanel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:visibility="gone">
+
+    <TextView
+        android:id="@+id/tvReadWriteHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/read_write_top_hint"
+        android:textColor="#4B5563"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvReadWriteDirtyState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="@string/read_write_dirty_none"
+        android:textColor="#6B7280"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_card_white"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="44dp"
+                android:gravity="center"
+                android:text="@string/read_write_column_channel"
+                android:textColor="#111827"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <com.byf3332.at2ht.widget.SyncHorizontalScrollView
+                android:id="@+id/hsvReadWriteHeader"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fillViewport="false"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/layoutReadWriteHeaderRow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:background="#EEF3FB"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="116dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/read_write_column_rx"
+                        android:textColor="#111827"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="116dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/read_write_column_tx"
+                        android:textColor="#111827"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="88dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/read_write_column_mode"
+                        android:textColor="#111827"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="88dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/read_write_column_rx_subtone"
+                        android:textColor="#111827"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="88dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/read_write_column_tx_subtone"
+                        android:textColor="#111827"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="72dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/read_write_column_hop"
+                        android:textColor="#111827"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="92dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/read_write_column_scrambler"
+                        android:textColor="#111827"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/read_write_column_bandwidth"
+                        android:textColor="#111827"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="88dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/read_write_column_scan_add"
+                        android:textColor="#111827"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="88dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/read_write_column_busy_lock"
+                        android:textColor="#111827"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="88dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/read_write_column_power"
+                        android:textColor="#111827"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.byf3332.at2ht.widget.SyncHorizontalScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvReadWriteFixedChannel"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingBottom="12dp"
+                tools:listitem="@layout/item_read_write_channel_fixed" />
+
+            <com.byf3332.at2ht.widget.SyncHorizontalScrollView
+                android:id="@+id/hsvReadWriteBody"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fillViewport="false"
+                android:overScrollMode="never"
+                android:scrollbars="horizontal">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvReadWriteRows"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
+                    android:paddingBottom="12dp"
+                    tools:listitem="@layout/item_read_write_row" />
+            </com.byf3332.at2ht.widget.SyncHorizontalScrollView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btnWriteCodeplug"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_feature_settings_button"
+        android:gravity="center"
+        android:text="@string/layout_write_device"
+        android:textColor="#111827"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+</LinearLayout>

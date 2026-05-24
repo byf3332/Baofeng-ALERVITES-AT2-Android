@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_voice_record_sheet"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="18dp"
+    android:paddingBottom="34dp">
+
+    <TextView
+        android:id="@+id/tvVoiceRecordHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/voice_record_hold_to_talk"
+        android:textColor="#D1D5DB"
+        android:textSize="22sp" />
+
+    <FrameLayout
+        android:id="@+id/voiceRecordHalo"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="34dp">
+
+        <View
+            android:id="@+id/viewVoiceRecordPulse"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/btnVoiceRecordHold"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_voice_record_button_blue">
+
+            <ImageView
+                android:id="@+id/ivVoiceRecordMic"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:layout_gravity="center"
+                android:src="@android:drawable/ic_btn_speak_now"
+                android:tint="#FFFFFF" />
+        </FrameLayout>
+    </FrameLayout>
+</LinearLayout>

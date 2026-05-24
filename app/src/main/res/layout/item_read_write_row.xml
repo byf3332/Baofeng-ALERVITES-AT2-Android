@@ -1,0 +1,117 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/readWriteRowRoot"
+    android:layout_width="wrap_content"
+    android:layout_height="52dp"
+    android:background="#FFFFFF"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tvRwRx"
+        android:layout_width="116dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingHorizontal="6dp"
+        android:text="@string/read_write_unknown_frequency"
+        android:textColor="#111827"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvRwTx"
+        android:layout_width="116dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingHorizontal="6dp"
+        android:text="@string/read_write_unknown_frequency"
+        android:textColor="#111827"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvRwMode"
+        android:layout_width="88dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingHorizontal="4dp"
+        android:text="@string/read_write_mode_digital"
+        android:textColor="#111827"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvRwRxTone"
+        android:layout_width="88dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingHorizontal="4dp"
+        android:text="@string/read_write_off"
+        android:textColor="#111827"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvRwTxTone"
+        android:layout_width="88dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingHorizontal="4dp"
+        android:text="@string/read_write_off"
+        android:textColor="#111827"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvRwHop"
+        android:layout_width="72dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/state_off"
+        android:textColor="#111827"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvRwEncrypt"
+        android:layout_width="92dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingHorizontal="4dp"
+        android:text="@string/read_write_off"
+        android:textColor="#111827"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvRwBandwidth"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingHorizontal="4dp"
+        android:text="@string/read_write_bandwidth_narrow"
+        android:textColor="#111827"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvRwScanAdd"
+        android:layout_width="88dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingHorizontal="4dp"
+        android:text="@string/state_off"
+        android:textColor="#111827"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvRwBusyLock"
+        android:layout_width="88dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingHorizontal="4dp"
+        android:text="@string/state_off"
+        android:textColor="#111827"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvRwPower"
+        android:layout_width="88dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingHorizontal="4dp"
+        android:text="@string/read_write_power_high"
+        android:textColor="#111827"
+        android:textSize="14sp" />
+</LinearLayout>

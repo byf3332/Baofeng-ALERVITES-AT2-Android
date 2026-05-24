@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card_white"
+    android:orientation="vertical"
+    android:paddingTop="12dp"
+    android:paddingBottom="16dp">
+
+    <TextView
+        android:id="@+id/actionPickImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="64dp"
+        android:text="@string/chat_select_album"
+        android:textColor="#111827"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E5E7EB" />
+
+    <TextView
+        android:id="@+id/actionCaptureImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="64dp"
+        android:text="@string/chat_take_photo"
+        android:textColor="#111827"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="#F3F4F6" />
+
+    <TextView
+        android:id="@+id/actionCancelImageSource"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="64dp"
+        android:text="@string/common_cancel"
+        android:textColor="#111827"
+        android:textSize="18sp" />
+
+</LinearLayout>

@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#F6F7FB">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/tvEditChannelName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:text="@string/placeholder_channel_1"
+            android:textColor="#111827"
+            android:textSize="34sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_card_white"
+            android:orientation="vertical"
+            android:paddingVertical="4dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="54dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="18dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/read_write_column_rx"
+                    android:textColor="#111827"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/etRxFreq"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="end"
+                    android:inputType="numberDecimal"
+                    android:textColor="#111827"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EEF0F3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="54dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="18dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/read_write_column_tx"
+                    android:textColor="#111827"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/etTxFreq"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="end"
+                    android:inputType="numberDecimal"
+                    android:textColor="#111827"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvTxFreqHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:paddingBottom="10dp"
+                android:text="@string/read_write_digital_sync_hint"
+                android:textColor="#6B7280"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEF0F3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="54dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="18dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/read_write_column_mode"
+                    android:textColor="#111827"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/etTalkMode"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:textColor="#111827"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEF0F3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="54dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="18dp">
+
+                <TextView
+                    android:id="@+id/tvRxToneLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/read_write_column_rx_subtone"
+                    android:textColor="#9CA3AF"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/etRxTone"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:textColor="#6B7280"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEF0F3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="54dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="18dp">
+
+                <TextView
+                    android:id="@+id/tvTxToneLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/read_write_column_tx_subtone"
+                    android:textColor="#9CA3AF"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/etTxTone"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:textColor="#6B7280"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEF0F3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="54dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="18dp">
+
+                <TextView
+                    android:id="@+id/tvHopLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/read_write_column_hop"
+                    android:textColor="#9CA3AF"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchHop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEF0F3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="54dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="18dp">
+
+                <TextView
+                    android:id="@+id/tvEncryptLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/read_write_column_scrambler"
+                    android:textColor="#111827"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/etEncryptKey"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:textColor="#111827"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEF0F3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="54dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="18dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/read_write_column_bandwidth"
+                    android:textColor="#111827"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/etBandwidth"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:textColor="#111827"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEF0F3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="54dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="18dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/read_write_column_scan_add"
+                    android:textColor="#111827"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchScanAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEF0F3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="54dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="18dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/read_write_column_busy_lock"
+                    android:textColor="#111827"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBusyLock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEF0F3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="54dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="18dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/read_write_column_power"
+                    android:textColor="#111827"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/etPower"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:textColor="#111827"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnClearChannel"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_button_danger"
+            android:text="@string/read_write_clear_channel_title"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnSaveChannel"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_button_primary"
+            android:text="@string/common_save"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>
