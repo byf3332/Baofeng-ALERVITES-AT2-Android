@@ -59,7 +59,7 @@ class DeviceAdapter(
             tvRenameDevice.paintFlags = tvRenameDevice.paintFlags or android.graphics.Paint.UNDERLINE_TEXT_FLAG
             tvRenameDevice.setOnClickListener { onRenameClick(item) }
             deviceMainArea.setOnClickListener { onCardClick(item) }
-            btnDeviceClose.isVisible = !connecting
+            btnDeviceClose.isVisible = true
             btnDeviceClose.text = "×"
             btnDeviceClose.setTextColor(
                 if (connected) 0xFFD11A2A.toInt() else 0xFF111827.toInt()

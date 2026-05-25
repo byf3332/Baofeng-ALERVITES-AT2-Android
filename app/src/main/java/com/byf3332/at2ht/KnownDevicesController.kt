@@ -26,9 +26,11 @@ class KnownDevicesController(
     private val lastDevicePrefKey: String,
     private val getBleState: () -> BleSessionState,
     private val getSelectedDeviceAddress: () -> String?,
+    private val getConnectingDeviceAddress: () -> String?,
     private val setSelectedDeviceAddress: (String?) -> Unit,
     private val onKnownDevicesChanged: () -> Unit,
     private val onReconnectRequested: (BleScanDevice, Boolean) -> Unit,
+    private val stopConnectionBeforeDelete: suspend () -> Unit,
     private val styleDialog: (AlertDialog) -> Unit,
 ) {
     fun upsertKnownDevice(device: BleScanDevice) {
@@ -92,7 +94,12 @@ class KnownDevicesController(
             .setTitle(R.string.device_delete_title)
             .setMessage(context.getString(R.string.device_delete_message, device.name))
             .setPositiveButton(R.string.common_confirm) { _, _ ->
-                removeKnownDevice(device.address)
+                scope.launch {
+                    if (getSelectedDeviceAddress() == device.address || getConnectingDeviceAddress() == device.address) {
+                        stopConnectionBeforeDelete()
+                    }
+                    removeKnownDevice(device.address)
+                }
             }
             .setNegativeButton(R.string.common_cancel, null)
             .create()

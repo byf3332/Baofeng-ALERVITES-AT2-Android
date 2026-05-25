@@ -340,11 +340,13 @@ class MainActivity : AppCompatActivity() {
             lastDevicePrefKey = PREF_LAST_DEVICE,
             getBleState = { bleState },
             getSelectedDeviceAddress = { selectedDeviceAddress },
+            getConnectingDeviceAddress = { connectingDeviceAddress },
             setSelectedDeviceAddress = { selectedDeviceAddress = it },
             onKnownDevicesChanged = {
                 if (::deviceAdapter.isInitialized) deviceAdapter.notifyDataSetChanged()
             },
             onReconnectRequested = ::reconnectKnownDevice,
+            stopConnectionBeforeDelete = { disconnectCurrentKeepDevice() },
             styleDialog = ::styleDialog,
         )
         locationShareController = LocationShareController(
