@@ -92,6 +92,36 @@ object At2Commands {
     fun queryDualWatch(): ByteArray =
         byteArrayOf(0x00, 0x01, 0x02, 0x0D)
 
+    fun queryPromptLanguage(): ByteArray =
+        byteArrayOf(0x00, 0x01, 0x01, 0x03)
+
+    fun queryPromptTone(): ByteArray =
+        byteArrayOf(0x00, 0x01, 0x01, 0x04)
+
+    fun queryVolume(): ByteArray =
+        byteArrayOf(0x00, 0x01, 0x01, 0x01)
+
+    fun querySquelch(): ByteArray =
+        byteArrayOf(0x00, 0x01, 0x02, 0x04)
+
+    fun queryTotSeconds(): ByteArray =
+        byteArrayOf(0x00, 0x01, 0x02, 0x05)
+
+    fun queryVox(): ByteArray =
+        byteArrayOf(0x00, 0x01, 0x02, 0x06)
+
+    fun queryVoxSensitivity(): ByteArray =
+        byteArrayOf(0x00, 0x01, 0x02, 0x07)
+
+    fun queryTxInhibit(): ByteArray =
+        byteArrayOf(0x00, 0x01, 0x02, 0x09)
+
+    fun queryTxIntervalSeconds(): ByteArray =
+        byteArrayOf(0x00, 0x01, 0x02, 0x0A)
+
+    fun queryNoiseReduction(): ByteArray =
+        byteArrayOf(0x00, 0x01, 0x02, 0x11)
+
     fun queryMainPttLongPress(): ByteArray =
         byteArrayOf(0x00, 0x01, 0x04, 0x0A, 0x01)
 

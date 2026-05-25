@@ -52,6 +52,28 @@ class At2ProtocolExecutor(
     suspend fun queryDualWatchState() =
         sendCommand(At2Commands.queryDualWatch(), "QUERY DUAL WATCH")
 
+    suspend fun queryFeatureSettingsState() {
+        val queries = listOf(
+            At2Commands.queryDualWatch() to "QUERY DUAL WATCH",
+            At2Commands.queryPromptLanguage() to "QUERY PROMPT LANGUAGE",
+            At2Commands.queryPromptTone() to "QUERY PROMPT TONE",
+            At2Commands.queryVolume() to "QUERY VOLUME",
+            At2Commands.querySquelch() to "QUERY SQUELCH",
+            At2Commands.queryTotSeconds() to "QUERY TOT",
+            At2Commands.queryVox() to "QUERY VOX",
+            At2Commands.queryVoxSensitivity() to "QUERY VOX SENSITIVITY",
+            At2Commands.queryTxInhibit() to "QUERY TX INHIBIT",
+            At2Commands.queryTxIntervalSeconds() to "QUERY TX INTERVAL",
+            At2Commands.queryNoiseReduction() to "QUERY NOISE REDUCTION",
+        )
+        queries.forEachIndexed { index, (payload, tag) ->
+            sendCommand(payload, tag)
+            if (index != queries.lastIndex) {
+                delay(80)
+            }
+        }
+    }
+
     suspend fun querySmartLinkMainPttTarget() =
         sendCommand(At2Commands.queryMainPttLongPress(), "QUERY SMART PTT")
 

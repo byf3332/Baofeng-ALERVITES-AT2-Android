@@ -43,6 +43,7 @@ import com.byf3332.at2ht.widget.SyncHorizontalScrollView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import java.util.concurrent.atomic.AtomicLong
 
@@ -762,8 +763,18 @@ class MainActivity : AppCompatActivity() {
             confirmDeleteDevice = ::confirmDeleteDevice,
             showChannelEditDialog = ::showChannelEditDialog,
             enterFeatureSettings = {
-                talkStage = TalkStage.FeatureSettings
-                renderAll()
+                lifecycleScope.launch {
+                    if (bleState == BleSessionState.Ready) {
+                        showLoadingOnly = true
+                        fullScreenLoadingText = getString(R.string.device_entry_loading)
+                        renderAll()
+                        protocolExecutor.queryFeatureSettingsState()
+                        delay(240)
+                        showLoadingOnly = false
+                    }
+                    talkStage = TalkStage.FeatureSettings
+                    renderAll()
+                }
             },
             switchDualWatchFocus = { protocolExecutor.switchDualWatchFocus(it) },
             renderFrequencyCard = ::renderFrequencyCard,

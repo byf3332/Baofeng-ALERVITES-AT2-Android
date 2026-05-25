@@ -93,6 +93,104 @@ class BleEventController(
                     }
                 }
 
+                decoded.family == 0x81 && decoded.command == 0x01 &&
+                    decoded.payload.size >= 2 &&
+                    decoded.payload[0] == 0x03.toByte() -> {
+                    val language = if (decoded.payload[1] == 0x01.toByte()) {
+                        At2Commands.PromptLanguage.English
+                    } else {
+                        At2Commands.PromptLanguage.Chinese
+                    }
+                    if (getFeatureSettings().promptLanguage != language) {
+                        setFeatureSettings(getFeatureSettings().copy(promptLanguage = language))
+                    }
+                }
+
+                decoded.family == 0x81 && decoded.command == 0x01 &&
+                    decoded.payload.size >= 2 &&
+                    decoded.payload[0] == 0x04.toByte() -> {
+                    val enabled = decoded.payload[1] != 0x00.toByte()
+                    if (getFeatureSettings().promptTone != enabled) {
+                        setFeatureSettings(getFeatureSettings().copy(promptTone = enabled))
+                    }
+                }
+
+                decoded.family == 0x81 && decoded.command == 0x01 &&
+                    decoded.payload.size >= 2 &&
+                    decoded.payload[0] == 0x01.toByte() -> {
+                    val value = decoded.payload[1].toInt() and 0xFF
+                    if (value in 1..8 && getFeatureSettings().volume != value) {
+                        setFeatureSettings(getFeatureSettings().copy(volume = value))
+                    }
+                }
+
+                decoded.family == 0x81 && decoded.command == 0x02 &&
+                    decoded.payload.size >= 2 &&
+                    decoded.payload[0] == 0x04.toByte() -> {
+                    val value = decoded.payload[1].toInt() and 0xFF
+                    if (value in 0..9 && getFeatureSettings().squelch != value) {
+                        setFeatureSettings(getFeatureSettings().copy(squelch = value))
+                    }
+                }
+
+                decoded.family == 0x81 && decoded.command == 0x02 &&
+                    decoded.payload.size >= 3 &&
+                    decoded.payload[0] == 0x05.toByte() -> {
+                    val value =
+                        (decoded.payload[1].toInt() and 0xFF) or
+                            ((decoded.payload[2].toInt() and 0xFF) shl 8)
+                    if (value in 0..240 && getFeatureSettings().totSeconds != value) {
+                        setFeatureSettings(getFeatureSettings().copy(totSeconds = value))
+                    }
+                }
+
+                decoded.family == 0x81 && decoded.command == 0x02 &&
+                    decoded.payload.size >= 2 &&
+                    decoded.payload[0] == 0x06.toByte() -> {
+                    val enabled = decoded.payload[1] != 0x00.toByte()
+                    if (getFeatureSettings().voxEnabled != enabled) {
+                        setFeatureSettings(getFeatureSettings().copy(voxEnabled = enabled))
+                    }
+                }
+
+                decoded.family == 0x81 && decoded.command == 0x02 &&
+                    decoded.payload.size >= 2 &&
+                    decoded.payload[0] == 0x07.toByte() -> {
+                    val value = decoded.payload[1].toInt() and 0xFF
+                    if (value in 1..5 && getFeatureSettings().voxSensitivity != value) {
+                        setFeatureSettings(getFeatureSettings().copy(voxSensitivity = value))
+                    }
+                }
+
+                decoded.family == 0x81 && decoded.command == 0x02 &&
+                    decoded.payload.size >= 2 &&
+                    decoded.payload[0] == 0x09.toByte() -> {
+                    val enabled = decoded.payload[1] != 0x00.toByte()
+                    if (getFeatureSettings().txInhibit != enabled) {
+                        setFeatureSettings(getFeatureSettings().copy(txInhibit = enabled))
+                    }
+                }
+
+                decoded.family == 0x81 && decoded.command == 0x02 &&
+                    decoded.payload.size >= 3 &&
+                    decoded.payload[0] == 0x0A.toByte() -> {
+                    val value =
+                        (decoded.payload[1].toInt() and 0xFF) or
+                            ((decoded.payload[2].toInt() and 0xFF) shl 8)
+                    if (value in 0..240 && getFeatureSettings().txIntervalSeconds != value) {
+                        setFeatureSettings(getFeatureSettings().copy(txIntervalSeconds = value))
+                    }
+                }
+
+                decoded.family == 0x81 && decoded.command == 0x02 &&
+                    decoded.payload.size >= 2 &&
+                    decoded.payload[0] == 0x11.toByte() -> {
+                    val enabled = decoded.payload[1] != 0x00.toByte()
+                    if (getFeatureSettings().noiseReduction != enabled) {
+                        setFeatureSettings(getFeatureSettings().copy(noiseReduction = enabled))
+                    }
+                }
+
                 decoded.family == 0x81 && decoded.command == 0x02 &&
                     decoded.payload.size >= 7 &&
                     decoded.payload[0] == 0x0E.toByte() &&
