@@ -63,7 +63,11 @@ class HomeUiController(
             onCardClick = showDeviceEntryDialog,
             onRenameClick = showRenameDeviceDialog,
             onCloseClick = { item ->
-                confirmDeleteDevice(item)
+                if (getBleState() == BleSessionState.Ready && getSelectedDeviceAddress() == item.address) {
+                    scope.launch { disconnectCurrentKeepDevice() }
+                } else {
+                    confirmDeleteDevice(item)
+                }
             },
         )
         rvDevices.layoutManager = LinearLayoutManager(rvDevices.context)
