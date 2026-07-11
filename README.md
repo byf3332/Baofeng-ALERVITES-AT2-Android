@@ -1,4 +1,387 @@
+<p align="center">
+  <a href="#english"><b>English</b></a>
+  ·
+  <a href="#中文"><b>中文</b></a>
+</p>
+
+---
+
+<a id="english"></a>
+
 # AT2 HT
+
+<p align="center">
+  <a href="#english"><b>English</b></a>
+  ·
+  <a href="#中文">中文</a>
+</p>
+
+AT2 HT is an open-source Android control application for the Baofeng / ALERVITES AT2 handheld radio.
+
+This project implements the AT2 BLE control and off-network messaging protocol, and replaces the closed-source media libraries used by the official Ola Radio app with open-source implementations:
+
+- Replaces the official `libtalkie.so` with OpenCORE-AMR for AMR-NB MR475 voice encoding and decoding;
+- Replaces the official `libgojni.so` image processing chain with an open-source Go implementation, with bit-exact compatibility against the original closed-source library output;
+- Supports BLE control, channel programming, text / image / voice / location messages, real-time PTT, and SmartLink control.
+
+This project does not require an Ola Radio account or any official server for normal local use.
+
+This project is developed with Android Studio.
+
+
+## Technical features
+
+- Complete implementation of the AT2 BLE-side control and messaging protocol;
+- Identified and verified that the AT2 / Baofeng GMSK voice path uses AMR-NB MR475;
+- OpenCORE-AMR generated MR475 voice frames have been successfully decoded by real AT2 hardware;
+- AT2 BLE voice frames are 12 bytes / 20 ms, corresponding to the 12-byte AMR-NB MR475 IETF payload with the 1-byte ToC/header removed;
+- Open-source Go implementation reproduces the official image processing pipeline, with bit-exact output compared with the original closed-source `libgojni.so`.
+
+
+## AT2 radio topology
+
+```text
+Main MCU (JieLi AC696X)
+│   ├─── BLE connection
+│   ├─── A2DP / HFP connection
+│   └─── Controls UCChip UC8288
+RF transceiver SoC (UCChip UC8288)
+    ├─── Analog radio
+    ├─── GMSK digital radio
+    └─── AMR-NB MR475 voice codec
+```
+
+
+## Features
+
+- BLE scanning, connection, known-device management, and automatic reconnection
+- BLE control home page
+  - Current channel display
+  - Dual-watch status and A/B focus switching
+  - Quick switching for 30 channels
+  - Common function settings
+- Channel read/write
+  - Read 30 channels
+  - Edit a single channel
+  - Write or clear a single channel
+  - Write the full channel table
+- Off-network communication
+  - Text messages
+  - Image messages
+  - Voice messages
+  - Location messages
+  - SOS messages
+  - Vibration alert on receive
+- Real-time PTT
+  - Real-time receive and playback in chat mode
+  - Transmit and receive on the PTT page
+- SmartLink
+  - Enable / disable control
+  - Main PTT long-press mapping settings
+
+
+## Current scope and limitations
+
+This project focuses on the AT2 BLE-side daily-use functions, including control, channel programming, off-network messages, real-time PTT, and SmartLink.
+
+The following are currently outside the scope of this project:
+
+- USB-C channel programming and firmware update protocol;
+- AC696X / UC8288 firmware modification;
+- Direct control of non-BLE Baofeng GMSK 16-channel radios;
+- Full RF air-interface decoder, FEC, and interleaving reverse engineering.
+
+Firmware updates should still be performed with the official PC CPS.
+
+
+## How to obtain the official CPS
+
+This project does not redistribute the official CPS installer. If you need the official CPS for firmware updates, USB-C programming, or other official maintenance operations, obtain the download link from the official Ola Radio app.
+
+Steps:
+
+1. Open the official Ola Radio app.
+2. Connect to the AT2 radio.
+3. Tap the three-dot menu in the top-right corner of the device card.
+4. Select `Device Detail`.
+5. In the `Device Detail` page, tap `Firmware Update Tool`.
+6. Copy the Google Drive link shown by the app.
+7. Download and install the CPS package from that link.
+
+After installation, the CPS frontend resources are located at:
+
+```text
+<install-dir>\Bluetooth_User_Series\resources\app\app\dist\assets
+```
+
+If you want to use the CPS dealer UI patch script provided by this repository (`tools\CPS_mod`), place the script into the `assets` directory above, in the same directory as `index-*.js`, and then run it.
+
+
+## Requirements
+
+- Minimum Android version: Android 8.1 (API 27)
+- Device with audio input/output, BLE, and location capability
+
+
+## Runtime permissions
+
+The app requests the following permissions depending on Android version:
+
+- Bluetooth scan
+- Bluetooth connect
+- Location
+- Audio recording
+- Storage access
+- Vibration
+
+
+## Compatibility
+
+Tested device:
+
+| Device | BLE control | Channel programming | Text | Image | Voice message | Real-time PTT | SmartLink |
+|---|---|---|---|---|---|---|---|
+| Baofeng / ALERVITES AT2 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+Other low-cost Baofeng GMSK 16-channel radios are not directly supported by this app. These radios can interoperate with the AT2 in GMSK digital voice mode, but the digital channel parameters must match completely and the radios must also have matching `subSystemId` values.
+
+`subSystemId` is a hidden parameter, probably determined by the radio dealer. It is not channel-specific; each radio has only one such value. Two radios must have the same value to interoperate in digital mode. Analog mode is not affected.
+
+For these 16-channel GMSK radios, no method is currently known to modify the `subSystemId`, but it can be checked as follows: power off the radio, turn the channel knob to channel 3, hold PTT and SK1, and power on the radio. The voice prompt will say `X 开机 3`; `X` is the `subSystemId`.
+
+For the AT2, see the README under `tools\CPS_mod`. After patching the CPS to expose the dealer setting, the AT2 `subSystemId` can be changed.
+
+
+## Project structure
+
+```text
+app/src/main/java/com/byf3332/at2ht
+├─ core/ble         BLE session and connection
+├─ core/protocol    AT2 protocol encoding/decoding and state parsing
+├─ core/chat        Image, voice, and message playback
+├─ core/ptt         Real-time PTT transmit and receive
+├─ widget           Custom widgets
+└─ *.kt             Page controllers and UI coordination layer
+```
+
+Native and Go source:
+
+```text
+app/src/main
+├─ cpp
+│  ├─ opencore-amr/    vendored OpenCORE-AMR 0.1.3
+│  ├─ CMakeLists.txt
+│  └─ talkie_jni.cpp
+├─ go
+│  ├─ resizer/         Image resizing implementation and golden tests
+│  ├─ go.mod
+│  ├─ go.sum
+│  └─ build-android.ps1
+└─ jniLibs/arm64-v8a
+   └─ libgojni.so      Prebuilt artifact generated from this project's Go source
+```
+
+Main entry points:
+
+- `MainActivity.kt`: main UI assembly and controller initialization
+- `BleEventController.kt`: BLE response dispatch
+- `ChatFlowController.kt`: off-network communication receive path
+- `ChatInteractionController.kt`: off-network communication send path
+- `ReadWriteUiController.kt`: channel editing and write-back
+- `SmartLinkUiController.kt`: SmartLink page control
+
+
+## Open-source `libtalkie.so` replacement
+
+The official Ola Radio app uses `libtalkie.so` to encode and decode AT2 voice data. This project keeps the original JNI boundary unchanged and uses OpenCORE-AMR as a compatible replacement.
+
+The Kotlin entry point remains:
+
+- `app/src/main/java/com/ucchip/sdk/codec/talkie/TalkieCodec.kt`
+
+Native implementation:
+
+- `app/src/main/cpp/talkie_jni.cpp`
+- `app/src/main/cpp/CMakeLists.txt`
+- `app/src/main/cpp/opencore-amr`
+
+Current fixed contract:
+
+- `getFrameSize() = 320`
+- `getEncodedFrameSize() = 12`
+- `getSampleRate() = 8000`
+- `getFrameDuration() = 20`
+- `encoder()`: `320-byte PCM16LE @ 8 kHz -> 12-byte AT2 payload`
+- `decoder()`: `12-byte AT2 payload -> 320-byte PCM16LE @ 8 kHz`
+
+AT2 voice frames are 20 ms each. AMR-NB MR475 is 13 bytes in IETF storage format:
+
+```text
+[1-byte ToC/header][12-byte MR475 payload]
+```
+
+`0x04` means an MR475 good speech frame. The 12-byte voice frame transmitted by the AT2 BLE protocol is equivalent to the MR475 payload with the ToC/header removed. For decoding, simply prepend `0x04` to the 12-byte AT2 payload.
+
+This project does not include the original closed-source `libtalkie.so` from Ola Radio.
+
+
+## Open-source `libgojni.so` replacement
+
+The official Ola Radio app uses a GoMobile native library to process images. This project reimplements that image processing chain and generates a new `libgojni.so` using open-source components.
+
+Current pipeline:
+
+```text
+Android reads image
+-> rotate according to EXIF orientation
+-> re-encode as Android JPEG quality 100
+-> Go image.Decode
+-> nfnt/resize Lanczos3 resize, max long side 300 px
+-> Go image/jpeg quality 75 encode
+```
+
+The implementation has passed golden-sample testing and can produce byte-for-byte identical output compared with the original closed-source `libgojni.so`. See `tools/verification/README.md` for details.
+
+The `app/src/main/jniLibs/arm64-v8a/libgojni.so` file in this repository is a prebuilt artifact generated from this project's Go source. It is not the original closed-source library from Ola Radio.
+
+
+## Build
+
+### 1. Install tools
+
+- Android Studio with bundled JDK
+- Android SDK Platform 36
+- Android SDK Build-Tools 36.1.0 or compatible version
+- CMake 3.22.1
+- Android NDK `28.2.13676358`
+- Go `1.24.0` only if rebuilding `libgojni.so`
+- gomobile `v0.0.0-20250305212854-3a7bc9f8a4de` only if rebuilding `libgojni.so`
+
+The Android components above can be installed from **Android Studio -> SDK Manager -> SDK Tools -> Show Package Details**.
+
+After cloning the repository, open the project with Android Studio and let the IDE generate `local.properties`. This file should not be committed.
+
+Developers who need to rebuild the Go library should install Go themselves. Go, gomobile, Android SDK, and build caches may be placed on any disk. All paths are configured in:
+
+`app/src/main/go/toolchain.properties`
+
+```properties
+GO_ROOT=/path/to/go
+GO_TOOLS_ROOT=/path/to/go-tools
+ANDROID_SDK_ROOT=/path/to/Android/Sdk
+BUILD_CACHE_ROOT=/path/to/build-cache
+```
+
+When moving to another computer, only these four variables need to be changed.
+
+The following example places gomobile and its install-time cache on drive D:. The directories should match `toolchain.properties`:
+
+```powershell
+$env:GOPATH='D:\path\to\go-tools\install-gopath'
+$env:GOMODCACHE='D:\path\to\go-tools\install-gopath\pkg\mod'
+$env:GOCACHE='D:\path\to\go-tools\install-cache'
+$env:GOBIN='D:\path\to\go-tools\bin'
+$env:TEMP='D:\path\to\go-tools\tmp'
+$env:TMP=$env:TEMP
+$env:GOTELEMETRY='off'
+& 'D:\path\to\go\bin\go.exe' install golang.org/x/mobile/cmd/gomobile@v0.0.0-20250305212854-3a7bc9f8a4de
+& 'D:\path\to\go\bin\go.exe' install golang.org/x/mobile/cmd/gobind@v0.0.0-20250305212854-3a7bc9f8a4de
+```
+
+Repository scripts do not install dependencies and do not modify system or user environment configuration. They only temporarily set `PATH` inside their own process so that gomobile can find Go, and restore the original value before exiting.
+
+All writable caches are placed under `BUILD_CACHE_ROOT/libgojni/`, configurable through `toolchain.properties`:
+
+- `GOPATH` and Go module cache
+- Go build cache
+- `TEMP` / `TMP`
+- Android user home
+
+`.toolchains/` is included in `.gitignore` and can be deleted at any time without polluting the source tree or user directories.
+
+
+### 2. Generate the open-source `libgojni.so` when needed
+
+Windows PowerShell:
+
+```powershell
+cd app/src/main/go
+./build-android.ps1
+```
+
+Linux or Git Bash:
+
+```bash
+cd app/src/main/go
+bash ./build-android.sh
+```
+
+The script performs the following steps:
+
+1. Checks the installed Go 1.24.0 and gomobile versions.
+2. Resolves pinned dependencies from `go.mod` / `go.sum`.
+3. Generates an Android AAR for `arm64-v8a`, API 27.
+4. Extracts `jni/arm64-v8a/libgojni.so` to `app/src/main/jniLibs/arm64-v8a/`.
+
+For complete Windows/Linux build instructions, see `docs/BUILDING.md`.
+
+> The repository already contains the generated `libgojni.so`. A normal Android Studio build does not require Go.
+
+
+## License
+
+This project is released under the Apache License 2.0. See the root `LICENSE` file for the full text.
+
+Third-party components keep their own licenses, including:
+
+- OpenCORE-AMR 0.1.3: located at `app/src/main/cpp/opencore-amr/`, with its upstream `LICENSE` and `opencore/NOTICE` retained;
+- `github.com/nfnt/resize`: version pinned in `app/src/main/go/go.mod`, upstream uses an ISC-style license;
+- `golang.org/x/mobile` / gomobile: version pinned in `app/src/main/go/go.mod` and the build scripts, upstream uses BSD-3-Clause;
+- AndroidX, Material Components, JUnit, and other build dependencies: distributed under their respective upstream licenses.
+
+Complete third-party attribution and distribution notes are available in the repository root:
+
+- `NOTICE`
+- `THIRD_PARTY_NOTICES.md`
+
+Notes:
+
+- `app/src/main/cpp/opencore-amr/opencore/NOTICE` must be retained when distributing source code that contains this component;
+- The upstream OpenCORE-AMR notice includes patent-related reminders for AMR / AMR-WB standard implementations. Users should evaluate compliance requirements in their own jurisdictions.
+
+
+## Debugging suggestions
+
+- BLE and protocol logs are only printed in `debug` builds.
+- After modifying protocol-related logic, test these scenarios first:
+  - Scan and connect
+  - BLE control page state reading
+  - Channel read/write
+  - Off-network text, image, and voice messages
+  - Real-time PTT
+  - SmartLink enable/disable and main PTT mapping
+
+
+## Notice
+
+Make sure that your frequency, power, and transmission behavior comply with the radio regulations in your jurisdiction.
+
+This project is not affiliated with Baofeng, ALERVITES, Ola Radio, UCChip, or any related manufacturer or dealer.
+
+Firmware update, USB-C programming, and AC696X / UC8288 firmware modification are outside the scope of this project. Firmware updates should still be performed with the official PC CPS.
+
+
+---
+
+<a id="中文"></a>
+
+# AT2 HT
+
+<p align="center">
+  <a href="#english">English</a>
+  ·
+  <a href="#中文"><b>中文</b></a>
+</p>
 
 AT2 HT 是一个面向 Baofeng / ALERVITES AT2 手台的开源 Android 控制应用。
 
@@ -19,19 +402,23 @@ AT2 HT 是一个面向 Baofeng / ALERVITES AT2 手台的开源 Android 控制应
 - 识别并验证 AT2 / Baofeng GMSK 语音链路使用 AMR-NB MR475；
 - OpenCORE-AMR 生成的 MR475 语音帧已通过真实 AT2 硬件解码测试；
 - AT2 BLE 语音帧为 12 bytes / 20 ms，对应 AMR-NB MR475 IETF payload 去除 1-byte ToC/header 后的 12-byte payload；
-- 使用开源 Go 实现复现官方图片处理流程，输出与原闭源 `libgojni.so` bit-exact；
+- 使用开源 Go 实现复现官方图片处理流程，输出与原闭源 `libgojni.so` bit-exact。
 
-## AT2对讲机拓扑
+
+## AT2 对讲机拓扑
+
 ```text
-主MCU (杰里AC696X)
-│   ├───BLE连接
-│   ├───A2DP/HFP连接
-│   └───控制御芯微UC8288
-射频收发器SoC (御芯微UC8288)
-    ├───模拟对讲
-    ├───GMSK数字对讲
-    └───AMR-NB MR475语音编解码
+主 MCU（杰理 AC696X）
+│   ├─── BLE 连接
+│   ├─── A2DP / HFP 连接
+│   └─── 控制御芯微 UC8288
+射频收发器 SoC（御芯微 UC8288）
+    ├─── 模拟对讲
+    ├─── GMSK 数字对讲
+    └─── AMR-NB MR475 语音编解码
 ```
+
+
 ## 功能
 
 - 蓝牙扫描、连接、已知设备管理、自动回连
@@ -73,6 +460,7 @@ AT2 HT 是一个面向 Baofeng / ALERVITES AT2 手台的开源 Android 控制应
 
 固件升级建议继续使用官方 PC CPS。
 
+
 ## 官方 CPS 获取方式
 
 本项目不重新分发官方 CPS 安装包。如需使用官方 CPS 进行固件升级、USB-C 写频或其他官方维护操作，可以从官方 Ola Radio App 获取下载链接。
@@ -87,12 +475,14 @@ AT2 HT 是一个面向 Baofeng / ALERVITES AT2 手台的开源 Android 控制应
 6. 复制弹出的 Google Drive 链接。
 7. 从该链接下载 CPS 安装包并安装。
 
-安装后CPS的前端资源位于：
+安装后 CPS 的前端资源位于：
 
 ```text
 <install-dir>\Bluetooth_User_Series\resources\app\app\dist\assets
 ```
-如果需要使用本仓库提供的CPS dealer UI patch脚本（`tools\CPS_mod`），应将脚本放入上述 assets 目录，也就是与 index-*.js 位于同一目录后再执行。
+
+如果需要使用本仓库提供的 CPS dealer UI patch 脚本（`tools\CPS_mod`），应将脚本放入上述 `assets` 目录，也就是与 `index-*.js` 位于同一目录后再执行。
+
 
 ## 运行要求
 
@@ -120,14 +510,13 @@ AT2 HT 是一个面向 Baofeng / ALERVITES AT2 手台的开源 Android 控制应
 |---|---|---|---|---|---|---|---|
 | Baofeng / ALERVITES AT2 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
-其他Baofeng GMSK廉价16信道机不适用于本应用，这类机器能与AT2在GMSK数字语音模式下互通，但数字信道参数完全匹配的同时还需要机器的subSystemId匹配。
+其他 Baofeng GMSK 廉价 16 信道机不适用于本应用。这类机器能与 AT2 在 GMSK 数字语音模式下互通，但数字信道参数完全匹配的同时还需要机器的 `subSystemId` 匹配。
 
-subSystemId是一个隐藏参数，疑似由机器的经销商决定。该参数不随信道变化，整机只有一个。两台机器要互通，该参数必须一致（模拟模式不受影响）。
+`subSystemId` 是一个隐藏参数，疑似由机器的经销商决定。该参数不随信道变化，整机只有一个。两台机器要互通，该参数必须一致（模拟模式不受影响）。
 
-对于这些16信道GMSK机器，目前没有找到subSystemId的修改方法，但可以按照以下方法查看：关机，信道旋钮转到3，按住PTT和SK1，开机，语音播报“X开机3”，这里的X即为subSystemId。
+对于这些 16 信道 GMSK 机器，目前没有找到 `subSystemId` 的修改方法，但可以按照以下方法查看：关机，信道旋钮转到 3，按住 PTT 和 SK1，开机，语音播报“X 开机 3”，这里的 X 即为 `subSystemId`。
 
-对于AT2，参考`tools\CPS_mod`下的README.md，对CPS进行修改，暴露经销商设置以后即可修改subSystemId。
-
+对于 AT2，参考 `tools\CPS_mod` 下的 README.md，对 CPS 进行修改，暴露经销商设置以后即可修改 `subSystemId`。
 
 
 ## 项目结构
@@ -154,7 +543,7 @@ app/src/main
 │  ├─ resizer/         图片缩放实现与黄金测试
 │  ├─ go.mod
 │  ├─ go.sum
-│  └─ buil、-android.ps1
+│  └─ build-android.ps1
 └─ jniLibs/arm64-v8a
    └─ libgojni.so      由本项目 Go 源码生成的预构建产物
 ```
@@ -218,7 +607,7 @@ Android 读取图片
 -> Go image/jpeg quality 75 编码
 ```
 
-该实现已通过黄金样本测试，输出可与原始闭源 `libgojni.so` 达到 byte-for-byte 一致。具体请参考`tools/verification/README.md`
+该实现已通过黄金样本测试，输出可与原始闭源 `libgojni.so` 达到 byte-for-byte 一致。具体请参考 `tools/verification/README.md`。
 
 本项目仓库中的 `app/src/main/jniLibs/arm64-v8a/libgojni.so` 是由本项目 Go 源码生成的预构建产物，不是官方 Ola Radio 的原始闭源库。
 
