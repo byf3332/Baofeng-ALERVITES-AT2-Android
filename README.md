@@ -10,12 +10,6 @@
 
 # AT2 HT
 
-<p align="center">
-  <a href="#english"><b>English</b></a>
-  ·
-  <a href="#中文">中文</a>
-</p>
-
 AT2 HT is an open-source Android control application for the Baofeng / ALERVITES AT2 handheld radio.
 
 This project implements the AT2 BLE control and off-network messaging protocol, and replaces the closed-source media libraries used by the official Ola Radio app with open-source implementations:
@@ -376,12 +370,6 @@ Firmware update, USB-C programming, and AC696X / UC8288 firmware modification ar
 <a id="中文"></a>
 
 # AT2 HT
-
-<p align="center">
-  <a href="#english">English</a>
-  ·
-  <a href="#中文"><b>中文</b></a>
-</p>
 
 AT2 HT 是一个面向 Baofeng / ALERVITES AT2 手台的开源 Android 控制应用。
 
