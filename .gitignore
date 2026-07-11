@@ -1,5 +1,13 @@
 *.iml
+.toolchains/
+.build-cache/
+tools/verification/captures/
+app/src/main/go/toolchain.properties
+app/src/main/go/build/
+app/src/main/go/*.aar
+app/src/main/go/*.jar
 .gradle
+.kotlin/
 /local.properties
 /.idea/caches
 /.idea/libraries
@@ -13,3 +21,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+/.build-cache

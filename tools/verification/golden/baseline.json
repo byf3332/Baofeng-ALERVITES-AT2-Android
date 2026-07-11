@@ -1,0 +1,14 @@
+{
+  "fixture": "../fixtures/no_network_test_image_2.jpg",
+  "fixture_sha256": "25d61b0dfa02535d424e708012412d3ac3ffba7c7384fbabc72011923eaf83e3",
+  "android_jpeg_q100": {
+    "file": "android_jpeg_q100.jpg",
+    "bytes": 93496,
+    "sha256": "b072462dcbd78c469bc285468f0eeb74bee231f593b5fbb023f7af28133db9fe"
+  },
+  "original_libgojni_output": {
+    "file": "original_libgojni_output.jpg",
+    "bytes": 7845,
+    "sha256": "8f6db45d06b000d3201dfda3722a245e44c8ec4178954965cd26a349874a37e1"
+  }
+}

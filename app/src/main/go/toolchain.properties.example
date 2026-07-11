@@ -1,0 +1,5 @@
+# Copy to toolchain.properties and edit these four paths.
+GO_ROOT=/path/to/go
+GO_TOOLS_ROOT=/path/to/go-tools
+ANDROID_SDK_ROOT=/path/to/android-sdk
+BUILD_CACHE_ROOT=/path/to/at2ht-build-cache

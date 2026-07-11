@@ -29,12 +29,14 @@ class ChatVoicePlayer(
         currentMessageId = messageId
         onStateChanged(messageId, true)
         playJob = scope.launch(Dispatchers.Default) {
+            var codec: TalkieCodec? = null
             try {
                 TalkieCodec.ensureLoaded()
-                val codec = TalkieCodec().apply { init() }
-                val encodedFrameSize = codec.getEncodedFrameSize()
-                val sampleRate = codec.getSampleRate()
-                val frameSizeBytes = codec.getFrameSize()
+                val activeCodec = TalkieCodec().apply { init() }
+                codec = activeCodec
+                val encodedFrameSize = activeCodec.getEncodedFrameSize()
+                val sampleRate = activeCodec.getSampleRate()
+                val frameSizeBytes = activeCodec.getFrameSize()
 
                 val minBuffer = AudioTrack.getMinBufferSize(
                     sampleRate,
@@ -63,7 +65,7 @@ class ChatVoicePlayer(
                 while (offset + encodedFrameSize <= encoded.size) {
                     if (!scope.coroutineContext[Job]!!.isActive) break
                     val frame = encoded.copyOfRange(offset, offset + encodedFrameSize)
-                    val pcm = codec.decoder(frame)
+                    val pcm = activeCodec.decoder(frame)
                     if (pcm != null && pcm.isNotEmpty()) {
                         track.write(pcm, 0, pcm.size)
                     }
@@ -72,6 +74,7 @@ class ChatVoicePlayer(
             } catch (t: Throwable) {
                 log("CHAT VOICE ERR ${t.javaClass.simpleName}: ${t.message}")
             } finally {
+                runCatching { codec?.close() }
                 withContext(Dispatchers.Main) {
                     releaseTrack()
                     val finishedId = currentMessageId

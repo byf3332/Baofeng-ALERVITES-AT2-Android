@@ -1,0 +1,17 @@
+AT2 HT
+Copyright 2026 AT2 HT contributors
+
+This product includes software developed by the AT2 HT contributors and
+third-party open source software.
+
+The AT2 HT project itself is licensed under the Apache License, Version 2.0.
+Third-party components remain under their own respective licenses.
+
+Third-party license notices and attribution information are documented in:
+
+- THIRD_PARTY_NOTICES.md
+- app/src/main/cpp/opencore-amr/LICENSE
+- app/src/main/cpp/opencore-amr/opencore/NOTICE
+
+The contents of this NOTICE file are for attribution and informational
+purposes only and do not modify the Apache License, Version 2.0.

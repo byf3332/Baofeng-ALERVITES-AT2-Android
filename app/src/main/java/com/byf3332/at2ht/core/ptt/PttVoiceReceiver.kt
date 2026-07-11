@@ -63,6 +63,7 @@ class PttVoiceReceiver(
         runCatching { audioTrack?.flush() }
         runCatching { audioTrack?.release() }
         audioTrack = null
+        runCatching { codec?.close() }
         codec = null
     }
 

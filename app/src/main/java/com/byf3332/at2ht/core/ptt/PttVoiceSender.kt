@@ -35,13 +35,15 @@ class PttVoiceSender(
         stopNow = false
         job = scope.launch(Dispatchers.IO) {
             var recorder: AudioRecord? = null
+            var codec: TalkieCodec? = null
             try {
                 Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO)
                 TalkieCodec.ensureLoaded()
-                val codec = TalkieCodec().apply { init() }
-                val frameBytes = codec.getFrameSize() // official trace shows encoder input len=320 bytes
-                val encodedFrame = codec.getEncodedFrameSize() // expected 12
-                val sampleRate = codec.getSampleRate() // expected 8000
+                val activeCodec = TalkieCodec().apply { init() }
+                codec = activeCodec
+                val frameBytes = activeCodec.getFrameSize() // official trace shows encoder input len=320 bytes
+                val encodedFrame = activeCodec.getEncodedFrameSize() // expected 12
+                val sampleRate = activeCodec.getSampleRate() // expected 8000
                 log("PTT codec frameBytes=$frameBytes enc=$encodedFrame sr=$sampleRate")
 
                 val minBuf = AudioRecord.getMinBufferSize(
@@ -77,7 +79,7 @@ class PttVoiceSender(
                                 continue
                             }
 
-                            val enc = codec.encoder(pcmFrame)
+                            val enc = activeCodec.encoder(pcmFrame)
                             if (enc == null) {
                                 log("PTT WARN encoder returned null frame in=${pcmFrame.size}")
                                 continue
@@ -156,6 +158,7 @@ class PttVoiceSender(
             } finally {
                 runCatching { recorder?.stop() }
                 runCatching { recorder?.release() }
+                runCatching { codec?.close() }
                 withContext(NonCancellable) { delay(10) }
             }
         }

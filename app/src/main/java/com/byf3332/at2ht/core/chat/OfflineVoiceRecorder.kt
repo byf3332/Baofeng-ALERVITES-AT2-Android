@@ -36,13 +36,15 @@ class OfflineVoiceRecorder(
         startedAtMs = System.currentTimeMillis()
         job = scope.launch(Dispatchers.IO) {
             var recorder: AudioRecord? = null
+            var codec: TalkieCodec? = null
             try {
                 Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO)
                 TalkieCodec.ensureLoaded()
-                val codec = TalkieCodec().apply { init() }
-                val frameBytes = codec.getFrameSize()
-                val encodedFrameBytes = codec.getEncodedFrameSize()
-                val sampleRate = codec.getSampleRate()
+                val activeCodec = TalkieCodec().apply { init() }
+                codec = activeCodec
+                val frameBytes = activeCodec.getFrameSize()
+                val encodedFrameBytes = activeCodec.getEncodedFrameSize()
+                val sampleRate = activeCodec.getSampleRate()
                 val minBuffer = AudioRecord.getMinBufferSize(
                     sampleRate,
                     AudioFormat.CHANNEL_IN_MONO,
@@ -64,7 +66,7 @@ class OfflineVoiceRecorder(
                         recorder.read(pcmFrame, 0, pcmFrame.size)
                     }
                     if (read != frameBytes) continue
-                    val frame = codec.encoder(pcmFrame) ?: continue
+                    val frame = activeCodec.encoder(pcmFrame) ?: continue
                     if (frame.size != encodedFrameBytes) continue
                     synchronized(this@OfflineVoiceRecorder) {
                         encoded.write(frame)
@@ -75,6 +77,7 @@ class OfflineVoiceRecorder(
             } finally {
                 runCatching { recorder?.stop() }
                 runCatching { recorder?.release() }
+                runCatching { codec?.close() }
             }
         }
         true
