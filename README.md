@@ -502,7 +502,7 @@ AT2 HT 是一个面向 Baofeng / ALERVITES AT2 手台的开源 Android 控制应
 
 `subSystemId` 是一个由经销商设定的隐藏参数。它不针对特定信道，而是每台对讲机仅有一个该数值。两台对讲机必须具有相同的 `subSystemId` 才能在数字模式下互通；模拟模式不受此影响。
 
-若需修改这些 GMSK 对讲机的 `subSystemId`，请参阅 [byf3332/Baofeng-GMSK-Walkie-Research](https://github.com/byf3332/Baofeng-GMSK-Walkie-Research/)。您也可以访问在线文档：[Doc_Baofeng-GMSK-Walkie-Research](https://byf3332.github.io/Baofeng-GMSK-Walkie-Research/en/)。对于 **AD-888SD** 和 **AD-V1D**，查看 `subSystemId` 的方法如下：关闭对讲机电源，将信道旋钮转至信道 3，同时按住 PTT 键和 SK1 键并开机。此时会听到语音提示 `X 开机 (加密) 3`，其中的数字 `X` 即为 `subSystemId`。目前，除 AT2 外，仅针对 **AD-888SD** 和 **AD-V1D** 的通信协议进行了测试。
+若需修改这些 GMSK 对讲机的 `subSystemId`，请参阅 [byf3332/Baofeng-GMSK-Walkie-Research](https://github.com/byf3332/Baofeng-GMSK-Walkie-Research/)。您也可以访问在线文档：[Doc_Baofeng-GMSK-Walkie-Research](https://byf3332.github.io/Baofeng-GMSK-Walkie-Research/)。对于 **AD-888SD** 和 **AD-V1D**，查看 `subSystemId` 的方法如下：关闭对讲机电源，将信道旋钮转至信道 3，同时按住 PTT 键和 SK1 键并开机。此时会听到语音提示 `X 开机 (加密) 3`，其中的数字 `X` 即为 `subSystemId`。目前，除 AT2 外，仅针对 **AD-888SD** 和 **AD-V1D** 的通信协议进行了测试。
 
 对于 AT2，参考 `tools\CPS_mod` 下的 README.md，对 CPS 进行修改，暴露经销商设置以后即可修改 `subSystemId`。
 
