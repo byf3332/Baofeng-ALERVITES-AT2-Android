@@ -137,11 +137,11 @@ Tested device:
 |---|---|---|---|---|---|---|---|
 | Baofeng / ALERVITES AT2 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
-Other low-cost Baofeng GMSK 16-channel radios are not directly supported by this app. These radios can interoperate with the AT2 in GMSK digital voice mode, but the digital channel parameters must match completely and the radios must also have matching `subSystemId` values.
+Other low-cost Baofeng GMSK radios like **AD-888SD and AD-V1D** are not supported by this app. These radios can talk with the AT2 in GMSK digital voice mode, but the digital channel parameters must match completely and the radios must also have matching `subSystemId` values.
 
-`subSystemId` is a hidden parameter, probably determined by the radio dealer. It is not channel-specific; each radio has only one such value. Two radios must have the same value to interoperate in digital mode. Analog mode is not affected.
+`subSystemId` is a hidden parameter, determined by the radio dealer. It is not channel-specific; each radio has only one such value. Two radios must have the same value to interoperate in digital mode. Analog mode is not affected.
 
-For these 16-channel GMSK radios, no method is currently known to modify the `subSystemId`, but it can be checked as follows: power off the radio, turn the channel knob to channel 3, hold PTT and SK1, and power on the radio. The voice prompt will say `X 开机 3`; `X` is the `subSystemId`.
+For these GMSK radios, to modify the `subSystemId`, please check [byf3332/Baofeng-GMSK-Walkie-Research](https://github.com/byf3332/Baofeng-GMSK-Walkie-Research/). An online doc is also avaliable at [Doc_Baofeng-GMSK-Walkie-Research](https://byf3332.github.io/Baofeng-GMSK-Walkie-Research/). For **AD-888SD and AD-V1D**, The `subSystemId` can be checked as follows: power off the radio, turn the channel knob to channel 3, hold PTT and SK1, and power on the radio. The voice prompt will say `X Power On (Encrypt) 3`, where `X` is a number, which is the `subSystemId`. Currently, apart from the AT2, the protocol has only been tested on **AD-888SD and AD-V1D**.
 
 For the AT2, see the README under `tools\CPS_mod`. After patching the CPS to expose the dealer setting, the AT2 `subSystemId` can be changed.
 
@@ -498,11 +498,11 @@ AT2 HT 是一个面向 Baofeng / ALERVITES AT2 手台的开源 Android 控制应
 |---|---|---|---|---|---|---|---|
 | Baofeng / ALERVITES AT2 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
-其他 Baofeng GMSK 廉价 16 信道机不适用于本应用。这类机器能与 AT2 在 GMSK 数字语音模式下互通，但数字信道参数完全匹配的同时还需要机器的 `subSystemId` 匹配。
+本应用不支持其他廉价宝锋 GMSK 对讲机（如 **AD-888SD 和 AD-V1D**）。虽然这些对讲机可以在 GMSK 数字语音模式下与 AT2 通话，但前提是数字信道参数必须完全匹配，且对讲机的 `subSystemId`（子网 ID）值也必须一致。
 
-`subSystemId` 是一个隐藏参数，疑似由机器的经销商决定。该参数不随信道变化，整机只有一个。两台机器要互通，该参数必须一致（模拟模式不受影响）。
+`subSystemId` 是一个由经销商设定的隐藏参数。它不针对特定信道，而是每台对讲机仅有一个该数值。两台对讲机必须具有相同的 `subSystemId` 才能在数字模式下互通；模拟模式不受此影响。
 
-对于这些 16 信道 GMSK 机器，目前没有找到 `subSystemId` 的修改方法，但可以按照以下方法查看：关机，信道旋钮转到 3，按住 PTT 和 SK1，开机，语音播报“X 开机 3”，这里的 X 即为 `subSystemId`。
+若需修改这些 GMSK 对讲机的 `subSystemId`，请参阅 [byf3332/Baofeng-GMSK-Walkie-Research](https://github.com/byf3332/Baofeng-GMSK-Walkie-Research/)。您也可以访问在线文档：[Doc_Baofeng-GMSK-Walkie-Research](https://byf3332.github.io/Baofeng-GMSK-Walkie-Research/en/)。对于 **AD-888SD** 和 **AD-V1D**，查看 `subSystemId` 的方法如下：关闭对讲机电源，将信道旋钮转至信道 3，同时按住 PTT 键和 SK1 键并开机。此时会听到语音提示 `X 开机 (加密) 3`，其中的数字 `X` 即为 `subSystemId`。目前，除 AT2 外，仅针对 **AD-888SD** 和 **AD-V1D** 的通信协议进行了测试。
 
 对于 AT2，参考 `tools\CPS_mod` 下的 README.md，对 CPS 进行修改，暴露经销商设置以后即可修改 `subSystemId`。
 
